@@ -4,7 +4,9 @@ Personal portfolio website showcasing research projects, visual design work, and
 
 ## Live Site
 
-Visit the website: [https://miamao0615.github.io/JiayuMaoProfolio/](https://miamao0615.github.io/JiayuMaoProfolio/)
+Visit the website:
+- Netlify: [https://proforlio-of-jiayu-mao.netlify.app/](https://proforlio-of-jiayu-mao.netlify.app/)
+- GitHub Pages: [https://miamao0615.github.io/JiayuMaoProfolio/](https://miamao0615.github.io/JiayuMaoProfolio/)
 
 ## Structure
 

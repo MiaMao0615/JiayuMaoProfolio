@@ -6,11 +6,7 @@ Personal portfolio website showcasing research projects, visual design work, and
 
 Visit the website:
 - Netlify: [https://proforlio-of-jiayu-mao.netlify.app/](https://proforlio-of-jiayu-mao.netlify.app/)
-<<<<<<< HEAD
 - GitHub Pages: [https://miamao0615.github.io/JiayuMaoProfolio/](https://miamao0615.github.io/JiayuMaoProfolio/)
-- Hugging Face: [https://huggingface.co/MiaMao](https://huggingface.co/MiaMao)
-=======
->>>>>>> e1c330e16a1b70e4ef59b0b45681da5530b4992c
 
 ## Structure
 

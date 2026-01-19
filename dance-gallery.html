@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Chinese Dance Gallery - 19 years of dance journey">
+    <title>Chinese Dance Gallery - Jiayu Mao</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .gallery-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .gallery-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-top: 100px;
+        }
+
+        .gallery-title {
+            font-size: 2.5rem;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .gallery-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-light);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            margin-bottom: 2rem;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .back-link:hover {
+            color: var(--accent-green);
+            transform: translateX(-5px);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2.5rem;
+            margin-top: 2rem;
+        }
+
+        .gallery-card {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .gallery-image-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4/3;
+            overflow: hidden;
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: var(--transition);
+        }
+
+        .gallery-card:hover .gallery-image {
+            transform: scale(1.05);
+        }
+
+        .gallery-caption {
+            padding: 1.25rem;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-top: 1px solid rgba(46, 92, 138, 0.1);
+        }
+
+        .gallery-caption-text {
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            line-height: 1.6;
+            margin: 0;
+            text-align: center;
+        }
+
+        /* Lightbox Modal */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            overflow: auto;
+            padding: 2rem;
+            box-sizing: border-box;
+        }
+
+        .lightbox-content {
+            position: relative;
+            margin: auto;
+            max-width: 1200px;
+            width: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .lightbox-image-wrapper {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .lightbox-image {
+            max-width: 100%;
+            max-height: 75vh;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .lightbox-caption {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .lightbox-caption-text {
+            color: white;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: -3rem;
+            right: 0;
+            color: white;
+            font-size: 2.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.2);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            border: none;
+        }
+
+        .lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .lightbox-nav:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .lightbox-prev {
+            left: -3rem;
+        }
+
+        .lightbox-next {
+            right: -3rem;
+        }
+
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 1.5rem;
+            }
+
+            .gallery-title {
+                font-size: 2rem;
+            }
+
+            .lightbox-prev {
+                left: 1rem;
+            }
+
+            .lightbox-next {
+                right: 1rem;
+            }
+
+            .lightbox-close {
+                top: 1rem;
+                right: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="index.html" style="text-decoration: none; color: inherit;">Jiayu Mao</a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#hobby">Back to Hobby</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Gallery -->
+    <div class="gallery-container">
+        <a href="index.html#hobby" class="back-link">
+            <span>←</span>
+            <span>Back to Hobby</span>
+        </a>
+        
+        <div class="gallery-header">
+            <h1 class="gallery-title">Chinese Dance Gallery</h1>
+            <p class="gallery-subtitle">19 years of dance journey</p>
+        </div>
+
+        <div class="gallery-grid" id="galleryGrid">
+            <!-- Gallery items will be generated by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+        <button class="lightbox-nav lightbox-prev" onclick="changeImage(-1)">‹</button>
+        <button class="lightbox-nav lightbox-next" onclick="changeImage(1)">›</button>
+        <div class="lightbox-content" onclick="event.stopPropagation()">
+            <div class="lightbox-image-wrapper">
+                <img id="lightboxImage" class="lightbox-image" src="" alt="Dance Photo">
+            </div>
+            <div class="lightbox-caption">
+                <p id="lightboxCaption" class="lightbox-caption-text"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 舞蹈照片数据 - 你可以在这里修改每张照片的说明文字
+        const dancePhotos = [
+            { src: 'assets/images/dance/微信图片_20251208103921_1047_22.jpg', caption: '"Climbing Hills and Valleys" - A Miao ethnic dance from China' },
+            { src: 'assets/images/dance/微信图片_20251208103921_1048_22.jpg', caption: 'Group photo of middle school dance troupe on stage' },
+            { src: 'assets/images/dance/微信图片_20251208103921_1052_22.jpg', caption: 'Back leg lift practice in elementary school' },
+            { src: 'assets/images/dance/微信图片_20251208103923_1056_22.jpg', caption: 'Elementary school graduation performance' },
+            { src: 'assets/images/dance/微信图片_20251208103923_1058_22.jpg', caption: 'Group photo in school garden after stage performance' },
+            { src: 'assets/images/dance/微信图片_20251208103923_1061_22.jpg', caption: 'Aerial view of dance performance "Love, Together"' },
+            { src: 'assets/images/dance/微信图片_20251208103935_1065_22.jpg', caption: 'Gala performance at the Great Hall of the People for the 40th anniversary of reform and opening-up' },
+            { src: 'assets/images/dance/微信图片_20251208103936_1069_22.jpg', caption: 'Technical combination showcase' },
+            { src: 'assets/images/dance/微信图片_20251208103937_1073_22.jpg', caption: 'Yangge dance "Green Mountains, Red Azaleas"' },
+            { src: 'assets/images/dance/微信图片_20251208103937_1075_22.jpg', caption: 'Dance practice session' },
+            { src: 'assets/images/dance/微信图片_20251208103937_1079_22.jpg', caption: 'Traditional dance form' },
+            { src: 'assets/images/dance/微信图片_20251208111643_1085_22.jpg', caption: 'Dance performance moment' },
+            { src: 'assets/images/dance/微信图片_20251229145926_1259_22.jpg', caption: 'Classical dance expression' },
+            { src: 'assets/images/dance/微信图片_20251229150040_1264_22.jpg', caption: 'Elegant dance movement' },
+            { src: 'assets/images/dance/微信图片_20251229150047_1265_22.jpg', caption: 'Stage performance' },
+            { src: 'assets/images/dance/微信图片_20251229150107_1266_22.jpg', caption: 'Dance practice and training' },
+            { src: 'assets/images/dance/微信图片_20251229154219_1269_22.jpg', caption: 'Traditional Chinese dance' },
+            { src: 'assets/images/dance/微信图片_20251229154221_1270_22.jpg', caption: 'Expressive dance performance' },
+            { src: 'assets/images/dance/微信图片_20251229154337_1271_22.jpg', caption: 'Graceful dance pose' }
+        ];
+
+        let currentImageIndex = 0;
+
+        // 生成画廊网格
+        function generateGallery() {
+            const galleryGrid = document.getElementById('galleryGrid');
+            dancePhotos.forEach((photo, index) => {
+                const card = document.createElement('div');
+                card.className = 'gallery-card';
+                card.onclick = () => openLightbox(index);
+                
+                card.innerHTML = `
+                    <div class="gallery-image-wrapper">
+                        <img src="${photo.src}" alt="Dance Photo ${index + 1}" class="gallery-image" loading="lazy">
+                    </div>
+                    <div class="gallery-caption">
+                        <p class="gallery-caption-text">${photo.caption}</p>
+                    </div>
+                `;
+                
+                galleryGrid.appendChild(card);
+            });
+        }
+
+        // 打开 lightbox
+        function openLightbox(index) {
+            currentImageIndex = index;
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.getElementById('lightboxImage');
+            const lightboxCaption = document.getElementById('lightboxCaption');
+            
+            lightboxImage.src = dancePhotos[index].src;
+            lightboxCaption.textContent = dancePhotos[index].caption;
+            lightbox.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        // 关闭 lightbox
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // 切换图片
+        function changeImage(direction) {
+            event.stopPropagation();
+            currentImageIndex += direction;
+            
+            if (currentImageIndex < 0) {
+                currentImageIndex = dancePhotos.length - 1;
+            } else if (currentImageIndex >= dancePhotos.length) {
+                currentImageIndex = 0;
+            }
+            
+            const lightboxImage = document.getElementById('lightboxImage');
+            const lightboxCaption = document.getElementById('lightboxCaption');
+            lightboxImage.src = dancePhotos[currentImageIndex].src;
+            lightboxCaption.textContent = dancePhotos[currentImageIndex].caption;
+        }
+
+        // ESC 键关闭 lightbox
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeLightbox();
+            } else if (event.key === 'ArrowLeft') {
+                changeImage(-1);
+            } else if (event.key === 'ArrowRight') {
+                changeImage(1);
+            }
+        });
+
+        // 初始化画廊
+        generateGallery();
+    </script>
+</body>
+</html>

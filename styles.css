@@ -139,17 +139,12 @@ body::before {
 /* 英雄区/首页 */
 .hero {
     margin-top: 80px;
-    padding: 5rem 0;
-    background: 
-        linear-gradient(135deg, rgba(46, 92, 138, 0.15) 0%, rgba(107, 155, 143, 0.12) 100%),
-        radial-gradient(circle at 30% 50%, rgba(46, 92, 138, 0.1) 0%, transparent 60%);
-    background-color: #F8F6F0;
+    padding: 4rem 0 3rem;
+    background-color: rgba(255, 255, 255, 0.6);
     color: var(--text-dark);
-    min-height: calc(100vh - 80px);
     display: flex;
     align-items: center;
     position: relative;
-    overflow: hidden;
 }
 
 .hero::before {
@@ -170,34 +165,45 @@ body::before {
 }
 
 .hero .container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
+    display: flex;
+    justify-content: center;
     align-items: center;
 }
 
 .hero-content {
-    animation: fadeInUp 1s ease;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero-identity {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.hero-image {
+    margin-bottom: 0;
 }
 
 .hero-title {
-    font-size: 3rem;
-    margin-bottom: 1rem;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
     line-height: 1.2;
-    font-family: 'Playfair Display', serif;
-    font-weight: 700;
+    font-weight: 600;
+    color: var(--text-dark);
 }
 
 .highlight {
-    color: var(--primary-color);
-    position: relative;
-    font-weight: 600;
+    color: var(--text-dark);
 }
 
 .hero-subtitle {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    opacity: 0.9;
+    font-size: 1.2rem;
+    margin-bottom: 0;
+    color: var(--text-light);
+    font-weight: 400;
 }
 
 .hero-description {
@@ -233,19 +239,45 @@ body::before {
     border: 1px solid rgba(46, 92, 138, 0.2);
 }
 
-.hero-buttons {
+/* Research Statement Section */
+.research-statement {
+    padding: 4rem 0;
+    background-color: rgba(255, 255, 255, 0.6);
+}
+
+.statement-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.statement-text {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--text-dark);
+    margin-bottom: 1.5rem;
+}
+
+.statement-text:last-of-type {
+    margin-bottom: 2.5rem;
+}
+
+.statement-buttons {
     display: flex;
     gap: 1rem;
+    justify-content: flex-start;
+    flex-wrap: wrap;
 }
 
 .btn {
-    padding: 0.75rem 2rem;
-    border-radius: 5px;
+    padding: 0.75rem 1.75rem;
+    border-radius: 4px;
     text-decoration: none;
-    font-weight: 600;
+    font-weight: 500;
     transition: var(--transition);
     display: inline-block;
-    border: 2px solid transparent;
+    border: 1px solid transparent;
+    font-size: 0.95rem;
 }
 
 .btn-primary {
@@ -255,11 +287,9 @@ body::before {
 }
 
 .btn-primary:hover {
-    background-color: transparent;
-    border-color: var(--primary-color);
-    color: var(--primary-color);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-hover);
+    background-color: var(--accent-green);
+    border-color: var(--accent-green);
+    color: white;
 }
 
 .btn-secondary {
@@ -269,9 +299,17 @@ body::before {
 }
 
 .btn-secondary:hover {
-    background-color: var(--primary-color);
-    color: white;
-    transform: translateY(-2px);
+    background-color: rgba(46, 92, 138, 0.05);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.section-subtitle {
+    font-size: 1rem;
+    color: var(--text-light);
+    text-align: center;
+    margin-bottom: 3rem;
+    font-weight: 400;
 }
 
 .hero-image {
@@ -281,14 +319,14 @@ body::before {
 }
 
 .avatar-placeholder {
-    width: 400px;
-    height: 400px;
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 3px solid rgba(46, 92, 138, 0.3);
-    box-shadow: 0 10px 40px rgba(46, 92, 138, 0.2);
+    border: 2px solid rgba(46, 92, 138, 0.15);
+    box-shadow: 0 4px 20px rgba(46, 92, 138, 0.1);
     overflow: hidden;
     background: rgba(255, 255, 255, 0.1);
     position: relative;
@@ -1892,12 +1930,21 @@ section {
     }
 
     .hero-subtitle {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
 
-    .hero-buttons {
+    .statement-content {
+        padding: 0 1rem;
+    }
+
+    .statement-buttons {
         justify-content: center;
         flex-wrap: wrap;
+    }
+
+    .avatar-placeholder {
+        width: 150px;
+        height: 150px;
     }
 
     .skills-grid {
@@ -1927,8 +1974,8 @@ section {
     }
 
     .avatar-placeholder {
-        width: 300px;
-        height: 300px;
+        width: 120px;
+        height: 120px;
     }
 
     .education-item,
